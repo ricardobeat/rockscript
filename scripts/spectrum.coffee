@@ -111,6 +111,8 @@ class window.SpaceViz extends SpectrumVisualizer
         startingPoint = new Point(-10, @canvas.height / 2)
         points = [startingPoint]
 
+        boomTimer = 0
+
         for i in [0..bars]
             magnitude = frequencies[i * size]
             height = magnitude/256 * @canvas.height | 0
@@ -130,6 +132,11 @@ class window.SpaceViz extends SpectrumVisualizer
                 points.push new Point(x, y)
             else if i % smoothing == 0
                 points.push new Point(x, y + height)
+
+            if i == 60 and magnitude > 100
+                @canvas.classList.add 'boom'
+                clearTimeout boomTimer
+                boomTimer = setTimeout (=> @canvas.classList.remove 'boom'), 350
 
         points2 = [startingPoint]
 

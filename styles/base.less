@@ -61,4 +61,8 @@ canvas {
     top: 50%;
     left: 0;
     right: 0;
+    -webkit-transition: 0.2s all ease-in;
+    &.boom {
+        -webkit-filter: blur(8px) brightness(200%) contrast(200%) hue-rotate(90deg);
+    }
 }
