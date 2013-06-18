@@ -18,6 +18,3 @@ npm-debug.log
 thumbs.db
 
 *.sublime-workspace
-
-resources/*.css
-resources/*.js
