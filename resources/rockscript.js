@@ -428,7 +428,8 @@
     };
 
     SpaceViz.prototype.draw = function() {
-      var bar_width, bars, cut, fillColor, frequencies, height, i, magnitude, offset, points, points2, size, smoothing, spacing, startingPoint, x, xc, y, yc, _i, _j, _k, _ref2, _ref3;
+      var bar_width, bars, boomTimer, cut, fillColor, frequencies, height, i, magnitude, offset, points, points2, size, smoothing, spacing, startingPoint, x, xc, y, yc, _i, _j, _k, _ref2, _ref3,
+        _this = this;
       if (this.running) {
         requestAnimationFrame(this.draw, this.canvas);
       }
@@ -446,6 +447,7 @@
       smoothing = 20;
       startingPoint = new Point(-10, this.canvas.height / 2);
       points = [startingPoint];
+      boomTimer = 0;
       for (i = _i = 0; 0 <= bars ? _i <= bars : _i >= bars; i = 0 <= bars ? ++_i : --_i) {
         magnitude = frequencies[i * size];
         height = magnitude / 256 * this.canvas.height | 0;
@@ -461,6 +463,13 @@
           points.push(new Point(x, y));
         } else if (i % smoothing === 0) {
           points.push(new Point(x, y + height));
+        }
+        if (i === 60 && magnitude > 100) {
+          this.canvas.classList.add('boom');
+          clearTimeout(boomTimer);
+          boomTimer = setTimeout((function() {
+            return _this.canvas.classList.remove('boom');
+          }), 350);
         }
       }
       points2 = [startingPoint];

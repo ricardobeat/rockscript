@@ -99,4 +99,4 @@ input[type="radio"]:checked{cursor:default;}
 input[type="radio"]:hover:before{background-image:-webkit-gradient(linear, left top, left bottom, from(#323232), to(#242424));}
 input[type="radio"]:checked:hover:before{background-image:-webkit-gradient(linear, left top, left bottom, from(#303030), to(#1f1f1f));}
 .dg.a.has-save ul{margin-top:0 !important;}
-.spaceviz{position:absolute;top:50%;left:0;right:0;}
+.spaceviz{position:absolute;top:50%;left:0;right:0;-webkit-transition:0.2s all ease-in;}.spaceviz.boom{-webkit-filter:blur(8px) brightness(200%) contrast(200%) hue-rotate(90deg);}
