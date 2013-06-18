@@ -142,7 +142,13 @@ init = (input) ->
     UI.createSwitch 'Delay', chain.indexOf delay
     UI.createSwitch 'Tremolo', chain.indexOf tremolo
 
-    s = new SpectrumVisualizer anal, 'meter'
+    anal.minDecibels = -65
+
+    if document.querySelector('.screenview')
+        s = new SpaceViz anal
+    else
+        s = new MeterViz anal
+
     s.run()
 
     using PedalBoard, setupEvents

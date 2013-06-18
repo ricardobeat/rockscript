@@ -1,12 +1,13 @@
 flour = require 'flour'
 
+task 'dev', ->
+    do flour.minifiers.disable
+
 task 'build:less', ->
-    flour.minifiers.css = null
     compile 'styles/base.less', 'resources/rockscript.css'
     compile 'styles/remote.less', 'resources/remote.css'
 
 task 'build:coffee', ->
-    flour.minifiers.js = null
     bundle [
         'scripts/utils.coffee'
         'scripts/ui.coffee'

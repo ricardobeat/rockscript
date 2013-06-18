@@ -1,18 +1,19 @@
-# Canvas
-# ============
+# Meters
+# -----------------------------------------------------------------------------
 
 class window.SpectrumVisualizer
-    constructor: (@analyser, @renderer = 'canvas') ->
+    constructor: (@analyser, @options) ->
+        @analyser.fftSize = 2048
 
-    createCanvas: ->
+    setup: ->
         @canvas = document.createElement 'canvas'
         document.getElementById('meters').appendChild @canvas
         @canvas.width = 400
         @canvas.height = 160
         @ctx = @canvas.getContext '2d'
 
-    drawCanvas: =>
-        requestAnimationFrame @drawCanvas, @canvas
+    draw: =>
+        requestAnimationFrame @draw, @canvas if @running
 
         frequencies = new Uint8Array @analyser.frequencyBinCount
         @analyser.getByteFrequencyData frequencies
@@ -32,7 +33,23 @@ class window.SpectrumVisualizer
             magnitude = frequencies[i * size]
             @ctx.fillRect i * (bar_width + spacing), @canvas.height, bar_width, -magnitude * 0.7
 
-    createMeters: ->
+    start: =>
+        @running = true
+        @draw()
+
+    stop: =>
+        @running = false
+
+    run: ->
+        @setup()
+        @start()
+
+
+# Canvas
+# -----------------------------------------------------------------------------
+
+class window.MeterViz extends SpectrumVisualizer
+    setup: ->
         @meters = []
         container = document.getElementById('meters')
         for i in [0..16]
@@ -42,8 +59,8 @@ class window.SpectrumVisualizer
             container.appendChild meter
             @meters.push meter
 
-    drawMeter: =>
-        setTimeout @drawMeter, 1000/15
+    draw: =>
+        setTimeout @draw, 1000/15 if @running
 
         frequencies = new Uint8Array @analyser.frequencyBinCount
         @analyser.getByteFrequencyData frequencies
@@ -55,10 +72,120 @@ class window.SpectrumVisualizer
             magnitude = frequencies[i * size]
             meter.value = magnitude / 192
 
-    run: ->
-        if @renderer is 'meter'
-            @createMeters()
-            @drawMeter()
-        else
-            @createCanvas()
-            @drawCanvas()
+# Full-screen sinewave
+# -----------------------------------------------------------------------------
+
+class Point
+    constructor: (@x, @y) ->
+
+class window.SpaceViz extends SpectrumVisualizer
+
+    setup: ->
+        @canvas = document.createElement 'canvas'
+        @canvas.className = 'spaceviz'
+        document.getElementById('meters').appendChild @canvas
+        @canvas.width  = window.innerWidth
+        @canvas.height = window.innerHeight / 2
+        @canvas.style.marginTop = - Math.floor(@canvas.height / 2) + 'px'
+        @ctx = @canvas.getContext '2d'
+
+    draw: =>
+        requestAnimationFrame @draw, @canvas if @running
+
+        frequencies = new Uint8Array @analyser.frequencyBinCount
+        @analyser.getByteFrequencyData frequencies
+
+        @ctx.fillStyle = 'rgba(0,0,0,0.2)'
+        @ctx.fillRect 0, 0, @canvas.width, @canvas.height
+
+        fillColor = [30, 30, 255, 0.6]
+        @ctx.fillStyle = "rgba(#{fillColor})"
+
+        bars      = 200
+        cut       = frequencies.length - 128 # cut-off high frequencies
+        size      = Math.floor cut / bars
+        spacing   = 2
+        bar_width = Math.ceil (@canvas.width / bars) - spacing
+
+        smoothing = 20
+        startingPoint = new Point(-10, @canvas.height / 2)
+        points = [startingPoint]
+
+        for i in [0..bars]
+            magnitude = frequencies[i * size]
+            height = magnitude/256 * @canvas.height | 0
+            offset = (@canvas.height - height) / 2 | 0
+
+            fillColor[0] = fillColor[1] = 196 - (magnitude/2) | 0
+            fillColor[2] = 192 + (magnitude/4 | 0)
+            fillColor[3] = (magnitude/256).toFixed(2)
+            @ctx.fillStyle = "rgba(#{fillColor})"
+
+            x = i * (bar_width + spacing)
+            y = offset
+
+            @ctx.fillRect x, y, bar_width, height
+
+            if i % smoothing == 10
+                points.push new Point(x, y)
+            else if i % smoothing == 0
+                points.push new Point(x, y + height)
+
+        points2 = [startingPoint]
+
+        # draw curve
+        @ctx.lineWidth = 2
+        @ctx.strokeStyle = 'rgba(255,255,255, 0.3)'
+        @ctx.beginPath()
+        @ctx.moveTo(0, @canvas.height / 2)
+
+        for i in [1...points.length-2]
+            xc = (points[i].x + points[i + 1].x) / 2
+            yc = (points[i].y + points[i + 1].y) / 2
+            @ctx.quadraticCurveTo points[i].x, points[i].y, xc, yc
+
+            points2.push new Point(points[i].x, @canvas.height - points[i].y)
+
+        # last two points
+        @ctx.quadraticCurveTo points[i].x, points[i].y, points[i+1].x, points[i+1].y
+        @ctx.stroke()
+
+        # 2nd curve
+        @ctx.lineWidth = 4
+        @ctx.strokeStyle = 'rgba(150,150,255, 0.1)'
+        @ctx.beginPath()
+        @ctx.moveTo(0, @canvas.height / 2)
+
+        for i in [1...points2.length-2]
+            xc = (points2[i].x + points2[i + 1].x) / 2
+            yc = (points2[i].y + points2[i + 1].y) / 2
+            @ctx.quadraticCurveTo points2[i].x, points2[i].y, xc, yc
+
+        @ctx.stroke()
+
+
+        # anchorPoint = [0, 0]
+        # gap = 20
+
+        # for i in [0..bars] by gap
+        #     magnitude = frequencies[i * size]
+        #     height    = magnitude/256 * @canvas.height | 0
+
+        #     x = i * (bar_width + spacing)
+        #     y = (@canvas.height - height) / 2 | 0
+        #     if magnitude < 10
+        #         y += (Math.random() - 0.5) * 4 # add some noise
+
+        #     # control points
+        #     [cx, cy] = anchorPoint
+        #     cy += (cy - y)
+        #     #cy += Math.floor (y - cy) / 2
+
+        #     @ctx.quadraticCurveTo(cx, cy, x, y)
+
+        #     anchorPoint = [
+        #         (i + gap/3) * (bar_width + spacing)
+        #         y
+        #     ]
+
+        # @ctx.stroke()

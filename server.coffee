@@ -12,6 +12,9 @@ app.configure ->
 app.get '/', (req, res) ->
     fs.createReadStream('index.html').pipe res
 
+app.get '/screen', (req, res) ->
+    fs.createReadStream('screen.html').pipe res
+
 app.get '/remote', (req, res) ->
     fs.createReadStream('remote.html').pipe res
 
