@@ -1,0 +1,73 @@
+@import "reset";
+
+html {
+    height: 100%;
+}
+body {
+    background: #000;
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.switches {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: -webkit-box;
+    -webkit-box-align: stretch;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    div {
+        display: block;
+        border: 1px solid #222;
+        -webkit-box-flex: 1;
+        background: #33383e;
+        text-align: center;
+        -webkit-transition: opacity .3s ease-out;
+        color: #ddd;
+        &.off {
+            opacity: 0.7;
+            color: #666;
+        }
+    }
+    span {
+        line-height: 700px;
+        font-weight: 700;
+        font-family: "Helvetica", sans-serif;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+}
+
+.distortion {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    width: 820px;
+    left: 50%;
+    margin-left: -410px;
+    height: 122px;
+    padding: 2px;
+    background: #222;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    button {
+        width: 160px;
+        height: 122px;
+        border: 0;
+        background: #444;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2) inset;
+        color: #666;
+        text-shadow: -1px -1px #222;
+        &.on {
+            box-shadow: 0 15px 30px rgba(80, 80, 250, 0.3) inset;
+            background: #445;
+            color: #99f;
+        }
+    }
+}

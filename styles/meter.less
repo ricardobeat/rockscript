@@ -1,0 +1,47 @@
+
+/* 
+ * adapted from umbrUI meter input by @simurai
+ */
+
+/* -------------- meter -------------- */
+
+meter {
+    -webkit-appearance: none;
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 17px;
+    margin: 8px 0 0 -74px;
+    left: 74px / 2;
+    border-radius: 5px;     
+    padding: 4px 5px 4px 5px;
+    box-sizing: border-box;   
+    background: #000;
+    -webkit-box-shadow: -1px 0 0 hsla(0,0%,100%,.08);
+    -webkit-transform-origin: center 8px;                                                                       
+    -webkit-transform: rotate(-90deg)
+    }
+
+
+meter::-webkit-meter-bar {
+    background-color: hsl(200,10%,14%);
+    background-size: 2px 5px;
+    background-image:   -webkit-linear-gradient( 0deg,  hsla(0,0%,0%,.4) 1px, hsla(0,0%,0%,0) 1px ),
+                        -webkit-linear-gradient( 90deg, hsla(0,0%,0%,1) 1px, hsla(0,0%,0%,0) 1px ); 
+    }
+
+
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value {
+    background-size: inherit;
+    background-image:   inherit;
+    -webkit-box-shadow: 0 0 10px 2px hsla(200,100%,50%,.4);
+    -webkit-transition: width .1s cubic-bezier(.20, .10, .20, 1);
+    }
+
+
+/* With these pseudo selectors you could change the colors when changing the value. */
+meter::-webkit-meter-optimum-value           { background-color: hsl(200, 100%, 50%); }
+meter::-webkit-meter-suboptimum-value        { background-color: hsl(200, 100%, 70%); }
+

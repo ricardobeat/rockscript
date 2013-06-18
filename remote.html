@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title>PedalBoard Remote</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,maximum-scale=1.0" />
+    <link rel="stylesheet" href="resources/remote.css" />
+</head>
+<body>
+    <div class="switches">
+        <div class="effect" id="overdrive"><span>Overdrive<span></div>
+        <div class="effect" id="delay"><span>Delay</span></div>
+        <div class="effect" id="tremolo"><span>Tremolo</span></div>
+    </div>
+    <div class="distortion">
+        <button id="distortion_A">A</button>
+        <button id="distortion_B">B</button>
+        <button id="distortion_C">C</button>
+        <button id="distortion_D">D</button>
+        <button id="distortion_E">E</button>
+    </div>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="resources/remote.js"></script>
+</body>
+</html>

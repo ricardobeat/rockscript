@@ -1,0 +1,57 @@
+@import "reset";
+
+html {
+    height: 100%;
+}
+body {
+    background: #000;
+    min-height: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+}
+
+#meters {
+    display: inline-block;
+    margin: 60px 0 40px;
+}
+
+canvas {
+    background: #000;
+}
+
+.pedals {
+    margin: 40px;
+    button {
+        display: inline-block;
+        margin:0 20px;
+        padding: 10px 20px;
+        border: 0;
+        color: #eee;
+        text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+        background: #445;
+        &.off { opacity: 0.3; }
+    }
+    li {
+        display: inline-block;
+        height: 40px;
+        padding: 10px;
+    }
+    input[type='checkbox'] {
+        display: block;
+    }
+    label {
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #333;
+    }
+}
+
+@import "meter";
+@import "checkbox";
+@import "radio";
+
+.dg.a.has-save ul {
+    margin-top: 0 !important;
+}
