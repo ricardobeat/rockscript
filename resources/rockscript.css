@@ -59,9 +59,9 @@ td{vertical-align:top;}
 .clearfix:after{clear:both;}
 .clearfix{*zoom:1;}
 html{height:100%;}
-body{background:#000;min-height:100%;max-width:720px;margin:0 auto;padding:40px;text-align:center;}
+body{background:#000000 url(../images/ghostnebula.jpg) center center;background-size:cover;min-height:100%;max-width:720px;margin:0 auto;padding:40px;text-align:center;}
 #meters{display:inline-block;margin:60px 0 40px;}
-canvas{background:#000;}
+canvas{background:transparent;}
 .pedals{margin:40px;}.pedals button{display:inline-block;margin:0 20px;padding:10px 20px;border:0;color:#eee;text-shadow:-1px -1px 0 rgba(0, 0, 0, 0.3);background:#445;}.pedals button.off{opacity:0.3;}
 .pedals li{display:inline-block;height:40px;padding:10px;}
 .pedals input[type='checkbox']{display:block;}
@@ -99,4 +99,5 @@ input[type="radio"]:checked{cursor:default;}
 input[type="radio"]:hover:before{background-image:-webkit-gradient(linear, left top, left bottom, from(#323232), to(#242424));}
 input[type="radio"]:checked:hover:before{background-image:-webkit-gradient(linear, left top, left bottom, from(#303030), to(#1f1f1f));}
 .dg.a.has-save ul{margin-top:0 !important;}
-.spaceviz{position:absolute;top:50%;left:0;right:0;-webkit-transition:0.2s all ease-in;}.spaceviz.boom{-webkit-filter:blur(8px) brightness(200%) contrast(200%) hue-rotate(90deg);}
+.spaceviz,.spaceviz-wave{position:absolute;top:50%;left:0;right:0;-webkit-transition:0.2s all ease-in;}.boom .spaceviz,.boom .spaceviz-wave{-webkit-filter:blur(10px) brightness(200%) contrast(200%) hue-rotate(90deg);}
+.spaceviz-wave{-webkit-filter:drop-shadow(0 0px 10px #b4b4ff) drop-shadow(0 5px 3px rgba(0, 0, 0, 0.6));}.boom .spaceviz-wave{-webkit-filter:brightness(250%) hue-rotate(360deg);opacity:0.3;}
