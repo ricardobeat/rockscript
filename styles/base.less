@@ -4,7 +4,8 @@ html {
     height: 100%;
 }
 body {
-    background: #000;
+    background: #000 url(../images/ghostnebula.jpg) center center;
+    background-size: cover;
     min-height: 100%;
     max-width: 720px;
     margin: 0 auto;
@@ -18,7 +19,7 @@ body {
 }
 
 canvas {
-    background: #000;
+    background: transparent;
 }
 
 .pedals {
@@ -56,13 +57,21 @@ canvas {
     margin-top: 0 !important;
 }
 
-.spaceviz {
+.spaceviz,
+.spaceviz-wave {
     position: absolute;
     top: 50%;
     left: 0;
     right: 0;
     -webkit-transition: 0.2s all ease-in;
-    &.boom {
-        -webkit-filter: blur(8px) brightness(200%) contrast(200%) hue-rotate(90deg);
+    .boom & {
+        -webkit-filter: blur(10px) brightness(200%) contrast(200%) hue-rotate(90deg);
+    }
+}
+.spaceviz-wave {
+    -webkit-filter: drop-shadow(0 0px 10px rgba(180,180,255,1)) drop-shadow(0 5px 3px rgba(0,0,0,0.6));
+    .boom & {
+        -webkit-filter: brightness(250%) hue-rotate(360deg);
+        opacity: 0.3;
     }
 }
