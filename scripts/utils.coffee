@@ -63,4 +63,3 @@ window.EventEmitter = class EventEmitter
     removeAllListeners: (event) ->
         delete @events[event]
         return @
-        

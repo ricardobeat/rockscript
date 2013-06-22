@@ -8,16 +8,13 @@ task 'build:less', ->
     compile 'styles/remote.less', 'resources/remote.css'
 
 task 'build:coffee', ->
+    compile 'scripts/utils.coffee', 'resources/utils.js'
     bundle [
         'scripts/utils.coffee'
-        'scripts/ui.coffee'
-        'scripts/audiochain.coffee'
         'scripts/spectrum.coffee'
-        'scripts/main.coffee'
-        'scripts/socket.coffee'
+        'scripts/ui.js'
+        'scripts/main.js'
     ], 'resources/rockscript.js'
-
-    compile 'scripts/remote.coffee', 'resources/remote.js'
 
 task 'build', ->
     invoke 'build:less'
@@ -25,5 +22,5 @@ task 'build', ->
 
 task 'watch', ->
     invoke 'build'
-    watch 'scripts/*.coffee', -> invoke 'build:coffee'
-    watch 'styles/*.less', -> invoke 'build:less'
+    watch 'scripts/*', -> invoke 'build:coffee'
+    watch 'styles/*', -> invoke 'build:less'

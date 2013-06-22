@@ -7,10 +7,8 @@ body {
     background: #000 url(../images/ghostnebula.jpg) center center;
     background-size: cover;
     min-height: 100%;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px;
     text-align: center;
+    overflow: hidden;
 }
 
 #meters {
@@ -73,5 +71,32 @@ canvas {
     .boom & {
         -webkit-filter: brightness(250%) hue-rotate(360deg);
         opacity: 0.3;
+    }
+}
+
+.switches {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Blanch";
+    font-size: 24px;
+    .switch {
+        display: inline-block;
+        border: 2px solid #eef;
+        border-radius: 6px;
+        color: #eef;
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        margin:0 0.6em;
+        opacity: 0.5;
+        -webkit-filter: drop-shadow(0 0 8px rgba(180,200,255,1));
+        &.on {
+            opacity: 1;
+            background: rgba(180,200,255,0.1);
+        }
     }
 }

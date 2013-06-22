@@ -42,9 +42,12 @@ class AudioChain
             self.connect next.input or next
             self.chained = true
 
-    toggle: (node) ->
+    toggle: (node, state) ->
         if typeof node is 'number'
             node = @set[node]
+
+        if node.bypass?
+            return node.bypass = +!node.bypass
 
         @[if node.chained then 'disconnect' else 'connect'] node
         return node.chained
@@ -61,4 +64,7 @@ class AudioChain
         @set.splice(index, 1, new_node)
         @connect index
 
-window.AudioChain = AudioChain
+if @exports
+    @exports = AudioChain
+else
+    window.AudioChain = AudioChain

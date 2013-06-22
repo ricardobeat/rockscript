@@ -7,7 +7,7 @@ class window.SpectrumVisualizer
 
     setup: ->
         @canvas = document.createElement 'canvas'
-        document.getElementById('meters').appendChild @canvas
+        document.getElementById('viz').appendChild @canvas
         @canvas.width = 400
         @canvas.height = 160
         @ctx = @canvas.getContext '2d'
@@ -51,7 +51,7 @@ class window.SpectrumVisualizer
 class window.MeterViz extends SpectrumVisualizer
     setup: ->
         @meters = []
-        container = document.getElementById('meters')
+        container = document.getElementById('viz')
         for i in [0..16]
             meter = document.createElement('meter')
             meter.value = 0
@@ -83,7 +83,7 @@ class window.SpaceViz extends SpectrumVisualizer
     makeCanvas: (name) ->
         canvas = document.createElement 'canvas'
         canvas.className = name
-        document.getElementById('meters').appendChild canvas
+        document.getElementById('viz').appendChild canvas
         canvas.width  = window.innerWidth
         canvas.height = window.innerHeight / 2
         canvas.style.marginTop = - Math.floor(canvas.height / 2) + 'px'
@@ -110,7 +110,7 @@ class window.SpaceViz extends SpectrumVisualizer
         @ctxbars.fillStyle = "rgba(#{fillColor})"
 
         bars      = 200
-        cut       = frequencies.length - 128 # cut-off high frequencies
+        cut       = frequencies.length - 512 # cut-off high frequencies
         size      = Math.floor cut / bars
         spacing   = 2
         bar_width = Math.ceil (@canvas.width / bars) - spacing
@@ -144,7 +144,7 @@ class window.SpaceViz extends SpectrumVisualizer
             else if i % smoothing == 0
                 points.push new Point(x, y + height)
 
-            if i == 30 and magnitude > 140
+            if i == 30 and magnitude > 170
                 document.body.classList.add 'boom'
                 clearTimeout boomTimer
                 boomTimer = setTimeout =>

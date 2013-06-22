@@ -21,6 +21,12 @@ body {
     -webkit-box-align: stretch;
     -webkit-box-orient: horizontal;
     -webkit-box-pack: center;
+    line-height: 200px;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue";
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 1px;
     div {
         display: block;
         border: 1px solid #222;
@@ -28,10 +34,11 @@ body {
         background: #33383e;
         text-align: center;
         -webkit-transition: opacity .3s ease-out;
-        color: #ddd;
-        &.off {
-            opacity: 0.7;
-            color: #666;
+        color: #bbb;
+        opacity: 0.7;
+        &.on {
+            background: rgb(230,240,255);
+            opacity: 1;
         }
     }
     span {

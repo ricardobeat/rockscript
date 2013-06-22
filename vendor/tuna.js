@@ -17,9 +17,13 @@
 //Originally written by Alessandro Saccoia, Chris Coniglio and Oskar Eriksson
 (function (window) {
     var userContext, userInstance, Tuna = function (context) {
+            if (! window.AudioContext) {
+        window.AudioContext = window.webkitAudioContext;
+        }
+
             if(!context) {
                 console.log("tuna.js: Missing audio context! Creating a new context for you.");
-                context = window.webkitAudioContext && (new window.webkitAudioContext());
+                context = window.AudioContext && (new window.AudioContext());
             }
             userContext = context;
             userInstance = this;
@@ -65,8 +69,8 @@
                 }
             },
             disconnect: {
-                value: function () {
-                    this.output.disconnect();
+                value: function (target) {
+                    this.output.disconnect(target);
                 }
             },
             connectInOrder: {
@@ -190,7 +194,7 @@
         this.Q = properties.resonance || this.defaults.Q.value;
         this.filterType = properties.filterType || this.defaults.filterType.value;
         this.gain = properties.gain || this.defaults.gain.value;
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Filter.prototype = Object.create(Super, {
         name: {
@@ -286,7 +290,7 @@
         this.makeupNode.connect(this.output);
 
         this.makeupGain = properties.makeupGain || this.defaults.makeupGain;
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Cabinet.prototype = Object.create(Super, {
         name: {
@@ -372,7 +376,7 @@
         this.attenuator.gain.value = 0.6934; // 1 / (10 ^ (((20 * log10(3)) / 3) / 20))
         this.lfoL.activate(true);
         this.lfoR.activate(true);
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Chorus.prototype = Object.create(Super, {
         name: {
@@ -481,7 +485,7 @@
         this.attack = properties.attack || this.defaults.attack.value;
         this.ratio = properties.ratio || this.defaults.ratio.value;
         this.knee = properties.knee || this.defaults.knee.value;
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Compressor.prototype = Object.create(Super, {
         name: {
@@ -649,7 +653,7 @@
         this.level = properties.level || this.defaults.level.value;
         this.filterHigh.type = 0;
         this.filterLow.type = 1;
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Convolver.prototype = Object.create(Super, {
         name: {
@@ -792,7 +796,7 @@
         this.dryLevel = properties.dryLevel || this.defaults.dryLevel.value;
         this.cutoff = properties.cutoff || this.defaults.cutoff.value;
         this.filter.type = 0;
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Delay.prototype = Object.create(Super, {
         name: {
@@ -905,7 +909,7 @@
         this.outputGain = properties.outputGain || this.defaults.outputGain.value;
         this.curveAmount = properties.curveAmount || this.defaults.curveAmount.value;
         this.algorithmIndex = properties.algorithmIndex || this.defaults.algorithmIndex.value;
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Overdrive.prototype = Object.create(Super, {
         name: {
@@ -1098,7 +1102,7 @@
 
         this.lfoL.activate(true);
         this.lfoR.activate(true);
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Phaser.prototype = Object.create(Super, {
         name: {
@@ -1240,7 +1244,7 @@
 
         this.lfoL.activate(true);
         this.lfoR.activate(true);
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.Tremolo.prototype = Object.create(Super, {
         name: {
@@ -1341,7 +1345,7 @@
 
         this.activateNode.gain.value = 2;
         this.envelopeFollower.activate(true);
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.WahWah.prototype = Object.create(Super, {
         name: {
@@ -1631,7 +1635,7 @@
         this.target = properties.target || {};
         this.output.onaudioprocess = this.callback(properties.callback ||
         function () {});
-        this.bypass = false;
+        this.bypass = properties.bypass || false;
     };
     Tuna.prototype.LFO.prototype = Object.create(Super, {
         name: {
