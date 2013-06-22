@@ -17,7 +17,7 @@
     // -------------
 
     effects.overdrive = new tuna.Overdrive({
-        outputGain     : .5  // 0 to 1+
+        outputGain     : .3  // 0 to 1+
       , drive          : 0.6   // 0 to 1
       , curveAmount    : 0.35 // 0 to 1
       , algorithmIndex : 2  // 0 to 5, selects one of our drive algorithms
@@ -56,15 +56,15 @@
       , bypass: 1
     })
 
-    // effects.wah = new tuna.WahWah({
-    //     automode: false,                //true/false
-    //   , baseFrequency: 0.5,            //0 to 1
-    //   , excursionOctaves: 2,           //1 to 6
-    //   , sweep: 0.2,                    //0 to 1
-    //   , resonance: 10,                 //1 to 100
-    //   , sensitivity: 0.5,              //-1 to 1
-    //   , bypass: 1
-    // })
+    effects.wah = new tuna.WahWah({
+        automode: false     // true/false
+      , baseFrequency: 0.5  // 0 to 1
+      , excursionOctaves: 2 // 1 to 6
+      , sweep: 0.2          // 0 to 1
+      , resonance: 10       // 1 to 100
+      , sensitivity: 0.5    // -1 to 1
+      , bypass: 1
+    })
 
     var compressor = new tuna.Compressor({
         threshold: 0.5    // -100 to 0
@@ -80,7 +80,6 @@
     var cabinet = new tuna.Cabinet({
         makeupGain: 1                              // 0 to 20
       , impulsePath: "impulses/impulse_guitar.wav" // path to your speaker impulse
-      //, impulsePath: "impulses/Sweetspot1M.wav" // path to your speaker impulse
       //, impulsePath: "impulses/wildecho.wav" // path to your speaker impulse
       , bypass: 0
     })
@@ -99,6 +98,7 @@
           , effects.chorus
           , effects.phaser
           , effects.delay
+          , effects.wah
           , anal
           , cabinet
           , context.destination
@@ -136,6 +136,10 @@
 
         socket.on('toggleSwitch', function(name, state){
             RockScript.emit('toggleSwitch', name, state, true)
+        })
+
+        socket.on('wah', function (value) {
+            effects.wah.baseFrequency = value / 10
         })
     }
 
