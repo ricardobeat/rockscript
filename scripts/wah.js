@@ -1,4 +1,4 @@
-(function(){
+;(function(){
 
     var socket = io.connect()
 
@@ -17,4 +17,4 @@
         socket.emit('wah', ratio.toFixed(2))
     }
 
-})()
+})();

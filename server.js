@@ -11,16 +11,16 @@ app.use(express.static(__dirname))
 // Serve static pages
 // -------------------
 
-app.get('/screen', function (req, res) {
-    fs.createReadStream('screen.html').pipe(res)
+app.get('/', function (req, res) {
+    fs.createReadStream('views/index.html').pipe(res)
 })
 
 app.get('/remote', function (req, res) {
-    fs.createReadStream('remote.html').pipe(res)
+    fs.createReadStream('views/remote.html').pipe(res)
 })
 
 app.get('/wah', function (req, res) {
-    fs.createReadStream('wah.html').pipe(res)
+    fs.createReadStream('views/wah.html').pipe(res)
 })
 
 // Websockets
@@ -41,3 +41,4 @@ io.sockets.on('connection', function (socket) {
 })
 
 server.listen(8000)
+console.log("listening on port 8000")
