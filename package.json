@@ -1,0 +1,23 @@
+{
+  "name": "rockscript",
+  "private": true,
+  "description": "",
+  "version": "0.1.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*"
+  },
+  "devDependencies": {
+    "flour": "*",
+    "less": "*"
+  },
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ricardobeat/rockscript.git"
+  },
+  "author": "Ricardo Tomasi",
+  "license": "MIT (ricardo.mit-license.org)"
+}
