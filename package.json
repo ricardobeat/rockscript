@@ -10,10 +10,10 @@
   },
   "devDependencies": {
     "flour": "*",
-    "less": "*"
+    "less": "*",
+    "uglify-js": "~2.3.6"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/ricardobeat/rockscript.git"
